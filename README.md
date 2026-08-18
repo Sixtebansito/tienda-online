@@ -34,6 +34,7 @@ cd tienda_online
 ```
 
 ### 2. Crear y activar el entorno virtual
+#### El entorno fue creado en mac
 ```bash
 python3 -m venv venv
 source venv/bin/activate  # En Windows usa: venv\Scripts\activate

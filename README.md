@@ -12,8 +12,6 @@ Una aplicación web desarrollada con Python y Flask que simula una tienda en lí
 
 ## Capturas de Pantalla
 
-*(Añade aquí tus capturas de pantalla)*
-
 ### Catálogo de Productos
 ![Catálogo](capturas/catalogo.png)
 

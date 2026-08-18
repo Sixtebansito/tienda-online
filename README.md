@@ -15,13 +15,13 @@ Una aplicación web desarrollada con Python y Flask que simula una tienda en lí
 *(Añade aquí tus capturas de pantalla)*
 
 ### Catálogo de Productos
-![Catálogo](ruta/a/tu/captura-catalogo.png)
+![Catálogo](capturas/catalogo.png)
 
 ### Detalle de Producto
-![Detalle](ruta/a/tu/captura-detalle.png)
+![Detalle](capturas/producto.png)
 
 ### Carrito de Compras
-![Carrito](ruta/a/tu/captura-carrito.png)
+![Carrito](capturas/carrito.png)
 
 ---
 

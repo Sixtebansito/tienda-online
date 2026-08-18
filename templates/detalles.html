@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ producto.nombre }} — Tienda Online{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('inicio') }}" class="mb-3 btn btn-outline-secondary">← Volver al catálogo</a>
+
+    <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-md-5 mb-4 mb-md-0">
+                {% if producto.imagen %}
+                    <img src="{{ url_for('static', filename='uploads/' + producto.imagen) }}" class="img-fluid rounded shadow-sm w-100" alt="{{ producto.nombre }}" style="object-fit: cover;">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/default.png') }}" class="img-fluid rounded shadow-sm w-100" alt="Sin imagen">
+                {% endif %}
+            </div>
+            
+            <div class="col-md-7">
+                <h2 class="fw-bold text-dark mb-2">{{ producto.nombre }}</h2>
+                <div class="badge bg-{{ 'primary' if producto.tipo == 'fisico' else 'success' if producto.tipo == 'digital' else 'warning text-dark' }} mb-3 fs-6">
+                    {{ producto.tipo.title() }}
+                </div>
+                
+                <h3 class="card-price mb-4">${{ producto.precio_base }}</h3>
+                
+                <div class="bg-light p-3 rounded mb-4">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="bi bi-upc-scan text-muted me-2"></i><strong>Código:</strong> {{ producto.codigo }}</li>
+                        <li class="mb-2"><i class="bi bi-box-seam text-muted me-2"></i><strong>Stock disponible:</strong> {{ producto.stock }} unidades</li>
+                        
+                        {% if producto.tipo == 'fisico' %}
+                            <li class="mb-2"><i class="bi bi-minecart-loaded text-muted me-2"></i><strong>Peso:</strong> {{ producto.peso_kg }} kg</li>
+                            <li class="mb-2"><i class="bi bi-truck text-muted me-2"></i><strong>Costo Envío/Kg:</strong> ${{ producto.costo_envio_por_kg }}</li>
+                        {% elif producto.tipo == 'digital' %}
+                            <li class="mb-2"><i class="bi bi-shield-check text-muted me-2"></i><strong>Licencia:</strong> {{ producto.licencia }}</li>
+                        {% elif producto.tipo == 'perecible' %}
+                            <li class="mb-2"><i class="bi bi-calendar-event text-muted me-2"></i><strong>Días para vencer:</strong> {{ producto.dias_para_vencer }} días</li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex">
+                    <form action="{{ url_for('agregar_carrito', producto_id=producto.id) }}" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-primary px-4 py-2">
+                            <i class="bi bi-cart-plus"></i> Agregar al Carrito
+                        </button>
+                    </form>
+                    <a href="{{ url_for('inicio') }}" class="btn btn-outline-secondary px-4 py-2">
+                        <i class="bi bi-arrow-left"></i> Volver al Catálogo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            {% if session.get('usuario_rol') == 'admin' %}
+            <hr>
+            <div class="d-flex gap-2">
+                <a href="{{ url_for('editar_producto', producto_id=producto.id) }}"
+                   class="btn btn-outline-primary">
+                    ✏️ Editar
+                </a>
+                <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}"
+                      method="POST"
+                      onsubmit="return confirm('¿Seguro que quieres desactivar este producto?');">
+                    <button type="submit" class="btn btn-outline-danger">
+                        🗑️ Desactivar
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
